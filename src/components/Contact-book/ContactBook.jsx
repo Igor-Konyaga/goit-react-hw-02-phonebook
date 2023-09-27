@@ -1,6 +1,5 @@
-import { Children, Component } from 'react';
+import { Component } from 'react';
 import css from './ContactBook.module.css';
-import { render } from '@testing-library/react';
 import { nanoid } from 'nanoid';
 
 export class ContactBook extends Component {
