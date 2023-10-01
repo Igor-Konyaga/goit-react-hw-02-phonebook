@@ -107,9 +107,4 @@ export class ContactBook extends Component {
   }
 }
 
-{
-  /* <li className={css.listItem} key={contact.id}>
-<p className={css.itemName}>{contact.name}:</p>
-<p className={css.itemTel}>{contact.number}</p>
-</li> */
-}
+
