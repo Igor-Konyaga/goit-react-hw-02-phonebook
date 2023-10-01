@@ -1,6 +1,8 @@
 import { Component } from 'react';
-import { ContactBook } from './Contact-book/ContactBook';
 import css from './App.module.css';
+import { ContactForm } from './Contact-form/ContactForm';
+import { Filter } from './Filter/Filter';
+import { ContactList } from './Contact-list/ContactList';
 
 export class App extends Component {
   state = {
@@ -11,20 +13,50 @@ export class App extends Component {
       { id: 'id-4', name: 'Annie Copeland', number: '227-91-26' },
     ],
     filter: '',
+    onDelete: false,
   };
 
-  formSubmit = data => {
-    this.state.contacts.push(data);
-    console.log(data);
+  handleSubmitForm = data => {
+    const filterName = this.state.contacts.some(
+      contact => contact.name === data.name
+    );
+
+    console.log(filterName);
+
+    if (filterName) {
+      alert(`The name ${data.name} is already in your contacts`);
+      return;
+    } else {
+      this.setState(prevState => {
+        return { contacts: [...prevState.contacts, data] };
+      });
+    }
   };
+
+  onFilter = filter => {
+    this.setState({ filter: filter });
+  };
+
+  getFilteredContacts = () => {
+    const normalizeFilter = this.state.filter.toLowerCase().trim();
+
+    return this.state.contacts.filter(contact => {
+      return contact.name.toLowerCase().includes(normalizeFilter);
+    });
+  };
+
+  //   onDeleteContact = e => {
+  //     this.setState({ onDelete: true });
+  //   };
 
   render() {
     return (
       <div className={css.section}>
-        <ContactBook
-          contacts={this.state.contacts}
-          onSubmit={this.formSubmit}
-        />
+        <h1 className={css.title}>Phonebooks</h1>
+        <ContactForm onSubmit={this.handleSubmitForm} />
+        <h2 className={css.title}>Contacts</h2>
+        <Filter filter={this.onFilter} />
+        <ContactList filteredContacts={this.getFilteredContacts} />
       </div>
     );
   }
