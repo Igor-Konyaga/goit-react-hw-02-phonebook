@@ -100,7 +100,7 @@ export class ContactBook extends Component {
                 </li>
               );
             }
-            return;
+            return null;
           })}
         </ul>
       </>
