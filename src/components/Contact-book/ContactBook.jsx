@@ -16,9 +16,8 @@ export class ContactBook extends Component {
     this.setState({ [currentName]: currentValue, id: nanoid() });
   };
 
-  onSearch = e => {
-    const currentValue = e.target.value;
-    this.setState({ filter: currentValue });
+  handleFilter = e => {
+    this.setState({ filter: e.target.value });
   };
 
   handleSubmit = e => {
@@ -73,8 +72,9 @@ export class ContactBook extends Component {
           Find contacts by name
           <input
             className={css.input}
-            onChange={this.onSearch}
+            onChange={this.handleFilter}
             value={this.state.filter}
+            name="filter"
             type="text"
           />
         </label>
@@ -82,15 +82,34 @@ export class ContactBook extends Component {
         <h2 className={css.title}>Contacts</h2>
         <ul className={css.list}>
           {this.props.contacts.map(contact => {
-            return (
-              <li className={css.listItem} key={contact.id}>
-                <p className={css.itemName}>{contact.name}:</p>
-                <p className={css.itemTel}>{contact.number}</p>
-              </li>
-            );
+            const contactName = contact.name.toLowerCase();
+            const filterName = this.state.filter.toLowerCase().trim();
+
+            if (!this.state.filter) {
+              return (
+                <li className={css.listItem} key={contact.id}>
+                  <p className={css.itemName}>{contact.name}:</p>
+                  <p className={css.itemTel}>{contact.number}</p>
+                </li>
+              );
+            } else if (contactName === filterName) {
+              return (
+                <li className={css.listItem} key={contact.id}>
+                  <p className={css.itemName}>{contact.name}:</p>
+                  <p className={css.itemTel}>{contact.number}</p>
+                </li>
+              );
+            }
           })}
         </ul>
       </>
     );
   }
+}
+
+{
+  /* <li className={css.listItem} key={contact.id}>
+<p className={css.itemName}>{contact.name}:</p>
+<p className={css.itemTel}>{contact.number}</p>
+</li> */
 }
