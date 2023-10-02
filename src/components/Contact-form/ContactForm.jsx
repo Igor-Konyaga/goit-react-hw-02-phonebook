@@ -25,8 +25,6 @@ export class ContactForm extends Component {
   handleSubmit = e => {
     e.preventDefault();
 
-    const inputName = e.currentTarget.elements.name.value.toLowerCase().trim();
-	 const inputNumber = e.currentTarget.elements.number.value.trim();
 
     this.props.onSubmit({...this.state});
 
