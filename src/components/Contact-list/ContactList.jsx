@@ -12,7 +12,7 @@ export class ContactList extends Component {
               <p className={css.itemTel}>{contact.number}</p>
               <button
                 className={css.button}
-                onClick={this.onDeleteContact}
+                onClick={() => this.props.deleteContact(contact.name)}
                 type="button"
               >
                 delete

@@ -1,4 +1,5 @@
 import { Component } from 'react';
+import Notiflix from 'notiflix';
 import css from './App.module.css';
 import { ContactForm } from './Contact-form/ContactForm';
 import { Filter } from './Filter/Filter';
@@ -24,7 +25,10 @@ export class App extends Component {
     console.log(filterName);
 
     if (filterName) {
-      alert(`The name ${data.name} is already in your contacts`);
+      Notiflix.Notify.failure(
+        `The name ${data.name} is already in your contacts`
+      );
+
       return;
     } else {
       this.setState(prevState => {
@@ -45,9 +49,15 @@ export class App extends Component {
     });
   };
 
-  //   onDeleteContact = e => {
-  //     this.setState({ onDelete: true });
-  //   };
+  handleDeleteContact = contactName => {
+    this.setState(prevState => {
+      return {
+        contacts: prevState.contacts.filter(
+          contact => contact.name !== contactName
+        ),
+      };
+    });
+  };
 
   render() {
     return (
@@ -56,7 +66,10 @@ export class App extends Component {
         <ContactForm onSubmit={this.handleSubmitForm} />
         <h2 className={css.title}>Contacts</h2>
         <Filter filter={this.onFilter} />
-        <ContactList filteredContacts={this.getFilteredContacts} />
+        <ContactList
+          filteredContacts={this.getFilteredContacts}
+          deleteContact={this.handleDeleteContact}
+        />
       </div>
     );
   }
