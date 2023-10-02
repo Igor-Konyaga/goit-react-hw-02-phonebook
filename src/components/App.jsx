@@ -14,15 +14,12 @@ export class App extends Component {
       { id: 'id-4', name: 'Annie Copeland', number: '227-91-26' },
     ],
     filter: '',
-    onDelete: false,
   };
 
   handleSubmitForm = data => {
     const filterName = this.state.contacts.some(
       contact => contact.name === data.name
     );
-
-    console.log(filterName);
 
     if (filterName) {
       Notiflix.Notify.failure(

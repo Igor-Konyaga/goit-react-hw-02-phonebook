@@ -6,13 +6,12 @@ export class ContactForm extends Component {
   state = {
     name: '',
     number: '',
-    id: '',
   };
 
   handleInput = e => {
     const currentValue = e.target.value;
     const currentName = e.target.name;
-    this.setState({ [currentName]: currentValue, id: nanoid() });
+    this.setState({ [currentName]: currentValue });
   };
 
   reset = () => {
@@ -25,7 +24,7 @@ export class ContactForm extends Component {
   handleSubmit = e => {
     e.preventDefault();
 
-    this.props.onSubmit({...this.state});
+    this.props.onSubmit({ ...this.state, id: nanoid() });
 
     this.reset();
   };
